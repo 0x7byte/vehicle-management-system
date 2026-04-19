@@ -184,10 +184,7 @@ It reinforces concepts such as:
 
 ## 👤 Author
 
-Student Submission
-ID: 12305036  
-Course: Programming Fundamentals  
-Project: Vehicle Management System  
+0x7byte
 
 ---
 
