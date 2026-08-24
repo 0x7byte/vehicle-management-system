@@ -1,193 +1,80 @@
-# 🚗 Vehicle Management System  
-### Structured Command-Line Application in C
+# Vehicle Management System
 
----
+A menu-driven C application for managing an in-memory vehicle collection. It supports record creation, lookup, update, deletion, reporting, grouping, and one-step undo operations.
 
-## 📌 Overview
+## Features
 
-The **Vehicle Management System** is a menu-driven command-line application developed in C.  
-It simulates a lightweight vehicle database system using structured programming and manual data management techniques.
+- Add vehicles with duplicate numeric ID detection.
+- List all registered vehicles.
+- Update a vehicle's brand, manufacturing year, and engine capacity.
+- Delete a vehicle by ID.
+- Search by numeric ID or text in model, brand, or type fields.
+- Bulk-delete vehicles older than a supplied year.
+- Report total count, average engine capacity, oldest year, and newest year.
+- Group records by the supported types: `car`, `bike`, `bus`, and `truck`.
+- Undo the most recent add, delete, or update operation.
 
-The system allows users to add, view, search, update, and delete vehicle records while ensuring data consistency and integrity.
+## Data Model
 
-This project demonstrates practical implementation of structured data handling without using external databases or file storage.
+| Field | Description |
+|---|---|
+| `id` | Unique numeric vehicle identifier. |
+| `vehicleType` | Text vehicle type. Grouping recognizes `car`, `bike`, `bus`, and `truck`. |
+| `vehicleModel` | Model name entered as a single token. |
+| `vehicleBrand` | Brand name entered as a single token. |
+| `year` | Manufacturing year. |
+| `engineCC` | Engine capacity in cubic centimeters. |
 
----
+## Build and Run
 
-## 🎯 Objectives
+Compile the two source files directly:
 
-- Implement structured data management using `struct`
-- Handle multiple records using arrays
-- Enforce unique identifiers
-- Maintain record consistency during updates and deletions
-- Design a continuous menu-driven system
-- Apply modular programming principles
-
----
-
-## 🏗️ System Design
-
-### 🔹 Data Structure
-
-Each vehicle record contains:
-
-- Vehicle ID (Unique Numeric Identifier)
-- Vehicle Type (Car, Bike, Bus, Truck, etc.)
-- Model Name
-- Brand / Manufacturer
-- Year of Manufacture
-- Engine Capacity (cc or descriptive text)
-
-Optional attributes may include:
-- Color
-- Seat Count
-- Fuel Type
-
-All records are stored in an internal array structure.
-
----
-
-## ⚙️ Core Functionalities
-
-### 1️⃣ Add New Vehicle
-- Accepts all vehicle attributes
-- Validates uniqueness of Vehicle ID
-- Inserts record into storage
-- Confirms successful addition
-
-### 2️⃣ Display All Vehicles
-- Lists all stored vehicles
-- Displays complete details in formatted structure
-- Handles empty system condition
-
-### 3️⃣ Search Vehicle
-Supports:
-- Search by Vehicle ID
-- Search by Vehicle Type
-- Search by Model Name
-
-Displays full details of matching records.
-
-### 4️⃣ Update Vehicle
-- Locate vehicle using ID
-- Display existing information
-- Modify selected fields
-- Save updated record without affecting others
-
-### 5️⃣ Delete Vehicle
-- Remove record by ID
-- Shift array elements to maintain continuity
-- Confirm deletion success
-
-### 6️⃣ Exit System
-- Clean and safe termination
-
----
-
-## 🔐 Functional Constraints Implemented
-
-- Manual data storage (arrays and structures only)
-- No external database or file handling
-- Maximum record limit (configurable)
-- Unique Vehicle ID enforcement
-- Input validation for numeric and text fields
-- Continuous menu loop until explicit exit
-- Record integrity preservation after update/delete
-
----
-
-## 🚀 Advanced Features (Extended Capabilities)
-
-The system architecture supports extension for:
-
-- Multi-condition filtering
-- Sorting by year, brand, or engine capacity
-- Duplicate detection across attributes
-- Bulk delete operations
-- Partial updates for matching records
-- Summary statistics generation
-- Grouping vehicles by category
-- Dynamic capacity expansion
-- Cloning vehicle templates
-- Undo last operation feature
-
----
-
-## 📁 Project Structure
-
-```
-.
-├── main.c      → Program entry point & menu loop
-├── init.c      → Core logic implementation
-├── init.h      → Function declarations & structures
-├── Makefile    → Build automation
-└── README.md   → Documentation
+```bash
+gcc -std=c11 -Wall -Wextra main.c init.c -o vehicle_management
+./vehicle_management
 ```
 
----
-
-## 🛠️ Technologies Used
-
-- C Programming Language
-- GCC Compiler
-- Makefile Build System
-- Structured Programming Concepts
-
----
-
-## 🔧 Compilation & Execution
-
-### Build the project:
+The repository also includes a `Makefile` whose default target compiles to `exec` and immediately runs the program:
 
 ```bash
 make
 ```
 
-### Run the executable:
+## Menu Operations
 
-```bash
-./program_name
+| Option | Operation |
+|---:|---|
+| 1 | Add vehicle |
+| 2 | Show vehicles |
+| 3 | Update vehicle information |
+| 4 | Delete vehicle |
+| 5 | Search by ID or text |
+| 6 | Bulk-delete by year threshold |
+| 7 | Display summary statistics |
+| 8 | Group by supported type |
+| 9 | Undo the most recent change |
+| 0 | Exit |
+
+## Implementation Notes
+
+Vehicle records are stored in a fixed in-memory array with a maximum capacity of 200 entries. The application does not write records to disk, so all records are lost when the process exits.
+
+The startup code invokes the external `sl` command before displaying the menu. This command is not required for vehicle operations; if it is not installed, the shell may print a message and the application continues.
+
+## Limitations
+
+- Data is not persisted between runs.
+- Text input is read with `%s`, so model, brand, and type values cannot contain spaces.
+- Grouping only recognizes lowercase `car`, `bike`, `bus`, and `truck` type values.
+- Undo retains a fixed-size history and applies only the most recent supported operation.
+
+## Project Structure
+
+```text
+.
+├── Makefile
+├── init.c
+├── init.h
+├── main.c
+└── README.md
 ```
-
-### Clean build files:
-
-```bash
-make clean
-```
-
----
-
-## 📊 Learning Outcomes
-
-By completing this project:
-
-- Gained hands-on experience managing structured records
-- Understood limitations of flat array-based storage
-- Practiced modular and maintainable code design
-- Improved logical problem-solving skills
-- Learned how real-world systems maintain data integrity
-
----
-
-## 🧠 Academic Significance
-
-This project simulates foundational database-like operations using only core C programming constructs.  
-It reinforces concepts such as:
-
-- Structured data modeling
-- Manual memory organization
-- Algorithmic record manipulation
-- Data validation techniques
-- Program modularization
-
----
-
-## 👤 Author
-
-0x7byte
-
----
-
-## 📄 License
-
-Developed for academic and educational purposes.
